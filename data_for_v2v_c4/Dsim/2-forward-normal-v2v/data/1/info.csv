@@ -1,0 +1,21 @@
+Date,CaseID,TestInfo,DataPath
+2024-09-15 16:33:02,1,"0s: Armed! 
+1.0s: Send takeoff command, fly target position [0,0,-1] 
+6.0s: Send stopFlag command:[2,3] 
+6.0s: Send hover command 
+11.0s: Send stopFlag command:[2,6] 
+11.0s: Send fixed-vel flight command, fly target vel [0.2,0,0] 
+26.0s: Send stopFlag command:[2,5] 
+26.0s: Send Landing command 
+31.0s: Send stopFlag command:[2,7] 
+",D:\Tjh\Platform\DT-Exp\data\2024-09-15\1\mav1
+2024-09-15 16:33:03,2,"0s: Armed! 
+1.0s: Send takeoff command, fly target position [0,0,-1] 
+6.0s: Send stopFlag command:[2,3] 
+6.0s: Send hover command 
+11.0s: Send stopFlag command:[2,6] 
+11.0s: Send fixed-vel flight command, fly target vel [0.2,0,0] 
+26.0s: Send stopFlag command:[2,5] 
+26.0s: Send Landing command 
+31.0s: Send stopFlag command:[2,7] 
+",D:\Tjh\Platform\DT-Exp\data\2024-09-15\1\mav2

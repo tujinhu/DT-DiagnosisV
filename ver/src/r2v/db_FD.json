@@ -1,0 +1,204 @@
+{
+    "FAULT_CASE": [
+        {
+            "CaseID": 1,
+            "Subsystem": "Power",
+            "Component": "Motor",
+            "FaultID": "123450",
+            "FaultType": "Motor Fault",
+            "FaultMode": "收集悬停数据",
+            "FaultParams": "0",
+            "ControlSequence": "2,1;1,1,1;2,3,0,0,-1;1,1,5;2,10,2,3;2,6;1,1,20;2,10,2,6;2,7;1,1,5;2,10,2,7",
+            "TestStatus": "Finished"
+        },
+        {
+            "CaseID": 2,
+            "Subsystem": "Power",
+            "Component": "Motor",
+            "FaultID": "123450",
+            "FaultType": "Motor Fault",
+            "FaultMode": "收集0.2m/s的前飞数据",
+            "FaultParams": "0",
+            "ControlSequence": "2,1;1,1,1;2,3,0,0,-1;1,1,5;2,10,2,3;2,6;1,1,5;2,10,2,6;2,5,0.2,0,0;1,1,10;2,10,2,5;2,7;1,1,5;2,10,2,7",
+            "TestStatus": "Finished"
+        },
+        {
+            "CaseID": 3,
+            "Subsystem": "Power",
+            "Component": "Motor",
+            "FaultID": "123450",
+            "FaultType": "Motor Fault",
+            "FaultMode": "收集电机故障(电机故障ID =11,flag=4),param = [1,1,0.85,1]数据",
+            "FaultParams": "0",
+            "ControlSequence": "2,1;1,1,1;2,3,0,0,-1;1,1,5;2,10,2,3;2,6;1,1,3;2,10,2,6;2,9,123450,123450,123450,4,1,1,0.85,1;1,1,5;2,10,2,9;2,7;1,1,5;2,10,2,7",
+            "TestStatus": "Finished"
+        },
+        {
+            "CaseID": 4,
+            "Subsystem": "Power",
+            "Component": "Motor",
+            "FaultID": "123450",
+            "FaultType": "Motor Fault",
+            "FaultMode": "收集加速度计x轴故障(ID =12,flag=3),param = [1,-1,-1,0,3000]数据",
+            "FaultParams": "0",
+            "ControlSequence": "2,1;1,1,1;2,3,0,0,-1;1,1,5;2,10,2,3;2,6;1,1,3;2,10,2,6;2,9,123544,123544,123544,3,0,3,1,-1,-1;1,1,10;2,10,2,9;2,7;1,1,5;2,10,2,7",
+            "TestStatus": "Finished"
+        },
+        {
+            "CaseID": 5,
+            "Subsystem": "Power",
+            "Component": "Motor",
+            "FaultID": "123450",
+            "FaultType": "Motor Fault",
+            "FaultMode": "收集陀螺仪x轴故障(ID =13,flag=3),param = [1,-1,-1,0,3000]数据",
+            "FaultParams": "0",
+            "ControlSequence": "2,1;1,1,1;2,3,0,0,-1;1,1,5;2,10,2,3;2,6;1,1,3;2,10,2,6;2,9,123545,123545,123545,3,0,0.3,1,-1,-1;1,1,10;2,10,2,9;2,7;1,1,5;2,10,2,7",
+            "TestStatus": "Finished"
+        },
+        {
+            "CaseID": 6,
+            "Subsystem": "Power",
+            "Component": "Motor",
+            "FaultID": "123450",
+            "FaultType": "Motor Fault",
+            "FaultMode": "收集电机#3故障(ID =11,flag=3),param = [-1,-1,1,-1,0,200]数据",
+            "FaultParams": "0",
+            "ControlSequence": "2,1;1,1,1;2,3,0,0,-1;1,1,5;2,10,2,3;2,6;1,1,3;2,10,2,6;2,9,123450,123450,123450,123450,3,0,200,-1,-1,1,-1;1,1,10;2,10,2,9;2,7;1,1,5;2,10,2,7",
+            "TestStatus": "Finished"
+        },
+        {
+            "CaseID": 7,
+            "Subsystem": "Power",
+            "Component": "Motor",
+            "FaultID": "123450",
+            "FaultType": "Motor Fault",
+            "FaultMode": "收集电机故障(电机故障ID =11,flag=4),正常数据",
+            "FaultParams": "0",
+            "ControlSequence": "2,1;1,1,1;2,3,0,0,-1;1,1,5;2,10,2,3;2,6;1,1,3;2,10,2,6;2,9,123450,123450,123450,4,1,1,1,1;1,1,5;2,10,2,9;2,7;1,1,5;2,10,2,7",
+            "TestStatus": "Finished"
+        },
+        {
+            "CaseID": 8,
+            "Subsystem": "Power",
+            "Component": "Motor",
+            "FaultID": "123450",
+            "FaultType": "Motor Fault",
+            "FaultMode": "收集加速度计x轴故障(ID =12,flag=3)的正常数据",
+            "FaultParams": "0",
+            "ControlSequence": "2,1;1,1,1;2,3,0,0,-1;1,1,5;2,10,2,3;2,6;1,1,3;2,10,2,6;2,9,123544,123544,123544,3,0,0,-1,-1,-1;1,1,10;2,10,2,9;2,7;1,1,5;2,10,2,7",
+            "TestStatus": "Finished"
+        },
+        {
+            "CaseID": 9,
+            "Subsystem": "Power",
+            "Component": "Motor",
+            "FaultID": "123450",
+            "FaultType": "Motor Fault",
+            "FaultMode": "收集陀螺仪x轴故障(ID =13,flag=3),正常数据",
+            "FaultParams": "0",
+            "ControlSequence": "2,1;1,1,1;2,3,0,0,-1;1,1,5;2,10,2,3;2,6;1,1,3;2,10,2,6;2,9,123545,123545,123545,3,0,0,1,-1,-1;1,1,10;2,10,2,9;2,7;1,1,5;2,10,2,7",
+            "TestStatus": "Finished"
+        },
+        {
+            "CaseID": 10,
+            "Subsystem": "Power",
+            "Component": "Motor",
+            "FaultID": "123450",
+            "FaultType": "Motor Fault",
+            "FaultMode": "收集电机#3故障(ID =11,flag=3),正常数据",
+            "FaultParams": "0",
+            "ControlSequence": "2,1;1,1,1;2,3,0,0,-1;1,1,5;2,10,2,3;2,6;1,1,3;2,10,2,6;2,9,123450,123450,123450,123450,3,0,0,-1,-1,1,-1;1,1,10;2,10,2,9;2,7;1,1,5;2,10,2,7",
+            "TestStatus": "Finished"
+        },
+        {
+            "CaseID": 11,
+            "Subsystem": "Power",
+            "Component": "Motor",
+            "FaultID": "123450",
+            "FaultType": "Motor Fault",
+            "FaultMode": "收集0.2m/s的前飞数据",
+            "FaultParams": "0",
+            "ControlSequence": "2,1;1,1,1;2,3,0,0,-1;1,1,5;2,10,2,3;2,6;1,1,5;2,10,2,6;2,8;1,1,10;2,10,2,8;2,7;1,1,5;2,10,2,7",
+            "TestStatus": "Finished"
+        },
+        {
+            "CaseID": 12,
+            "Subsystem": "Power",
+            "Component": "Motor",
+            "FaultID": "123450",
+            "FaultType": "Motor Fault",
+            "FaultMode": "收集0.2m/s的前飞数据",
+            "FaultParams": "0",
+            "ControlSequence": "2,1;1,1,1;2,3,0,0,-1;1,1,5;2,10,2,3;2,6;1,1,5;2,10,2,6;2,8;1,1,10;2,10,2,8;2,7;1,1,5;2,10,2,7",
+            "TestStatus": "Finished"
+        },
+        {
+            "CaseID": 21,
+            "Subsystem": "Power",
+            "Component": "Motor",
+            "FaultID": "123450",
+            "FaultType": "Motor Fault",
+            "FaultMode": "（孪生）加速度计x轴【std=0】【悬停】基线测试数据",
+            "FaultParams": "0",
+            "ControlSequence": "2,1;1,1,1;2,3,0,0,-1;1,1,5;2,10,2,3;2,6;1,1,5;2,10,2,6;1,1,10;2,10,2,6;2,7;1,1,5;2,10,2,7",
+            "TestStatus": "Finished"
+        },
+        {
+            "CaseID": 22,
+            "Subsystem": "Power",
+            "Component": "Motor",
+            "FaultID": "123450",
+            "FaultType": "Motor Fault",
+            "FaultMode": "（真机）加速度计x轴【std=3】【悬停】故障测试数据",
+            "FaultParams": "0",
+            "ControlSequence": "2,1;1,1,1;2,3,0,0,-1;1,1,5;2,10,2,3;2,6;1,1,5;2,10,2,6;2,9,12,3,1,-1,-1,0,3;1,1,10;2,10,2,9;2,7;1,1,5;2,10,2,7",
+            "TestStatus": "Finished"
+        },
+        {
+            "CaseID": 31,
+            "Subsystem": "Power",
+            "Component": "Motor",
+            "FaultID": "123450",
+            "FaultType": "Motor Fault",
+            "FaultMode": "（孪生）加速度计x轴【std=0】【轨迹】基线测试数据",
+            "FaultParams": "0",
+            "ControlSequence": "2,1;1,1,1;2,3,0,0,-1;1,1,5;2,10,2,3;2,8;1,1,15;2,10,2,8;2,7;1,1,5;2,10,2,7",
+            "TestStatus": "Finished"
+        },
+        {
+            "CaseID": 32,
+            "Subsystem": "Power",
+            "Component": "Motor",
+            "FaultID": "123450",
+            "FaultType": "Motor Fault",
+            "FaultMode": "（真机）加速度计x轴【std=3】【轨迹】故障测试数据",
+            "FaultParams": "0",
+            "ControlSequence": "2,1;1,1,1;2,3,0,0,-1;1,1,5;2,10,2,3;2,8;1,1,3;2,9,12,3,1,-1,-1,0,3;1,1,12;2,10,2,9;2,7;1,1,5;2,10,2,7",
+            "TestStatus": "Finished"
+        },
+        {
+            "CaseID": 41,
+            "Subsystem": "Power",
+            "Component": "Motor",
+            "FaultID": "123450",
+            "FaultType": "Motor Fault",
+            "FaultMode": "（孪生）【大机动】基线测试数据",
+            "FaultParams": "0",
+            "ControlSequence": "2,1;1,1,1;2,3,0,0,-1;1,1,5;2,10,2,3;2,8;1,1,5;2,10,2,8;2,7;1,1,5;2,10,2,7",
+            "TestStatus": "Finished"
+        },
+        {
+            "CaseID": 42,
+            "Subsystem": "Power",
+            "Component": "Motor",
+            "FaultID": "123450",
+            "FaultType": "Motor Fault",
+            "FaultMode": "（真机）【大机动】故障测试数据",
+            "FaultParams": "0",
+            "ControlSequence": "2,1;1,1,1;2,3,0,0,-1;1,1,5;2,10,2,3;2,8;1,1,5;2,10,2,8;2,7;1,1,5;2,10,2,7",
+            "TestStatus": "Finished"
+        }
+    ],
+    "TEST_CASE": "21,22;",
+    "VISION": "Off"
+}

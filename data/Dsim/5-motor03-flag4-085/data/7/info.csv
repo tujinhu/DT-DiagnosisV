@@ -1,0 +1,25 @@
+Date,CaseID,TestInfo,DataPath
+2024-09-15 14:39:34,1,"0s: Armed! 
+1.0s: Send takeoff command, fly target position [0,0,-1] 
+6.0s: Send stopFlag command:[2,3] 
+6.0s: Send hover command 
+9.0s: Send stopFlag command:[2,6] 
+9.0s: Send fault injection command 
+ Fault injection type:123450 
+ Fault injection parameters:[4.0, 1.0, 1.0, 0.85, 1.0] 
+14.0s: Send stopFlag command:[2,9] 
+14.0s: Send Landing command 
+19.0s: Send stopFlag command:[2,7] 
+",D:\Tjh\Platform\DT-Exp\data\2024-09-15\7\mav1
+2024-09-15 14:39:35,2,"0s: Armed! 
+1.0s: Send takeoff command, fly target position [0,0,-1] 
+6.0s: Send stopFlag command:[2,3] 
+6.0s: Send hover command 
+9.0s: Send stopFlag command:[2,6] 
+9.0s: Send fault injection command 
+ Fault injection type:123450 
+ Fault injection parameters:[4.0, 1.0, 1.0, 1.0, 1.0] 
+14.0s: Send stopFlag command:[2,9] 
+14.0s: Send Landing command 
+19.0s: Send stopFlag command:[2,7] 
+",D:\Tjh\Platform\DT-Exp\data\2024-09-15\7\mav2
