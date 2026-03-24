@@ -37,7 +37,7 @@ The pipeline consists of four stages:
 1. **Physical UAV** collects 9-channel IMU data (Accelerometer × 3, Gyroscope × 3, Magnetometer × 3) at 50 Hz.
 2. **Digital Twin** (CopterSim) runs a synchronized high-fidelity simulation, producing an identical 9-channel output.
 3. **Feature Construction** computes the DT residual (`err = raw − sim`) and interleaves it with the raw signal to form an 18-channel representation.
-4. **TS-SGDN** constructs a spatio-temporal sensor graph and performs fault classification via graph attention + bidirectional GRU.
+4. **TC-SGDN** constructs a spatio-temporal sensor graph and performs fault classification via graph attention + bidirectional GRU.
 
 ### Communication Modes
 
