@@ -65,6 +65,25 @@ Each CSV file has **9 columns** (no header row in some versions):
 
 ---
 
+## Dataset Quality & Performance Analysis
+
+To demonstrate the high fidelity of the Digital Twin simulation and its suitability for fault diagnosis, we provide performance analysis on trajectory tracking and sensor fitting precision.
+
+### Trajectory Tracking Performance
+
+![fig1_trajectory](figures/fig1_trajectory.png)
+
+**Figure 1. Trajectory tracking performance of the UAV DT model.** Experiments are conducted on the V2V dataset, including 5 repeated flight segments for hover (HOV) and forward (FOR) flight modes. (a)(b) 2D scatter plots of XY-plane trajectories for the real UAV (gray) and DT (red) in HOV and FOR modes, respectively. (c) Grouped bar chart of the absolute trajectory error (ATE), calculated as $\text{ATE}= \sqrt{\frac{1}{N}\sum_{i=1}^{N}\|\mathbf{p}_i^{\text{real}} - \mathbf{p}_i^{\text{DT}}\|^2}$. (d) Grouped bar chart of the relative pose error (RPE) with fixed interval $\delta=10$, calculated as $\text{RPE} = \sqrt{\frac{1}{M}\sum_{i=1}^{M}\|(\mathbf{p}_{i+\delta}^{\text{real}} - \mathbf{p}_i^{\text{real}}) - (\mathbf{p}_{i+\delta}^{\text{DT}} - \mathbf{p}_i^{\text{DT}})\|^2}$, where $M$ is the number of valid interval samples. (e) Kernel density estimation (KDE) curves of X/Y/Z-axis position error distribution in HOV mode. (f) Bar chart of the mean absolute error (MAE, $\text{MAE} = \frac{1}{N}\sum_{i=1}^{N}|e_i|$, $e_i$ is position error at step $i$) for each axis, with error bars indicating the 90% confidence interval (CI).
+
+### Sensor Channel Fitting Precision
+
+![fig2_sensor](figures/fig2_sensor.png)
+
+**Figure 2. Sensor channel fitting precision and error characteristics of the UAV DT model.** Analysis covers 6 core on-board channels: 3-axis gyroscope (Gyro-x/y/z) and 3-axis accelerometer (Acc-x/y/z); channel error is defined as $e_i = x_i^{\text{DT}} - x_i^{\text{Real}}$. (a) Grouped bar chart of the normalized root mean square error (NRMSE), calculated as $\text{NRMSE} = \frac{\text{RMSE}}{x_{\max} - x_{\min}}$, where $\text{RMSE} = \sqrt{\frac{1}{N}\sum_{i=1}^{N}e_i^2}$. (b) Scatter of real vs. DT-simulated sensor readings. (c) Violin plots of error distribution for each channel in HOV mode, with embedded box plots marking median and interquartile range (IQR). (d) Comprehensive evaluation heatmap of core error metrics (MAE, RMSE, NRMSE) for each channel. (e) KDE density of error distribution in different channels. (f) Line plot of NRMSE stability across three equal flight time segments (first/middle/last 1/3). (g) Cross-channel error correlation heatmap. (h) Standard deviation(Std)/interquartile range(IQR) of different channels.
+
+
+---
+
 ## Data Preprocessing Pipeline
 
 ### Step 1: Channel Reordering

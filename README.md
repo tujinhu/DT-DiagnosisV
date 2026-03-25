@@ -268,3 +268,33 @@ openpyxl
 ```
 
 ---
+
+---
+
+## Robustness Analysis to DT Uncertainty
+
+To evaluate the operational boundaries of the TC-SGDN framework, we systematically investigated its robustness against two primary sources of digital twin uncertainties: **parameter perturbations** and **synchronization errors**.
+
+### Robustness to DT Parameter Perturbations
+
+![fig3](figures/fig3.png)
+
+**Figure 3. Robustness of the diagnosis model under DT feature perturbation.** Tested on a 4-class UAV fault diagnosis task (normal, X-axis Acc fault, motor efficiency fault, motor PWM limiting fault); perturbations are applied only to DT error feature channels, with reference noise standard deviation $\sigma=0.558$. (a)(b) Line plots of model performance under Gaussian noise ($0\sim5\sigma$) and systematic bias ($0\sim3\sigma$), respectively. (c) Bar chart of model accuracy under selective $3\sigma$ noise perturbation on Acc, Gyro, and Mag channels. (d) Scatter with quadratic fitting curve showing the correlation between noise level and accuracy. (e) Horizontal bar chart of model perturbation sensitivity. (f) Line plot of accuracy with increasing noise level.
+
+#### Key Findings
+
+*   **Random Noise Tolerance (Unmodeled Non-linearities):** The model exhibits strong robustness against random modeling uncertainties. Accuracy remains highly stable (>89%) even when random noise reaches $1\sigma$. Random errors fail to break the spatiotemporal invariants structure learned by the model, demonstrating that the graph network effectively absorbs non-systematic residuals.
+*   **Systematic Bias Sensitivity:** The system is highly sensitive to systematic offsets. A mere $0.5\sigma$ bias causes accuracy to plummet to ~30%. This reveals that **"structural offsets"** (not complex unmodeled non-linearities) are the dominant risk factor. These offsets shift the healthy baseline and invalidate the physical meaning of the residual direction.
+*   **Channel Dependencies:** Perturbations in accelerometer channels cause significantly steeper performance degradation (~21% accuracy) compared to gyroscope/magnetometer channels (~17-18%), indicating highly structure-dependent fault feature coupling.
+
+### Robustness to Synchronization Errors & Data Quality
+
+![fig4_robustness](figures/fig4_robustness.png)
+
+**Figure 4. Model robustness under DT time synchronization error and data corruption.** Time synchronization error is simulated by modifying DT feature time alignment; DT data corruption is implemented by replacing DT channels with Gaussian noise. (a) Line plot of model accuracy under cross-mode DT data mixing. (b) Line plot under random time jitter ($\pm0$ to $\pm700$ sample offset). (c) Impact of resampling ratio ($0.5\sim2.0$) deviation on model accuracy. (d) Bar chart under DT data corruption ($1.0\times$ to $10.0\times$ noise level). (e) Confusion matrix of the full model on the test set. (f) Line plots of model Accuracy and F1 score under decreasing SNR ($40$ dB to $-10$ dB).
+
+#### Key Findings
+
+*   **Temporal Desynchronization Robustness:** The model handles severe synchronization errors remarkably well. It maintains >91% accuracy under $\pm100$ sample jitter or $\le50\%$ cross-modal mixing, and ~94% accuracy across $0.5\times$ to $2.0\times$ sampling rate deviations. This success stems from the fact that the graph structure relies primarily on **relational patterns** rather than strict temporal point-to-point numerical alignment.
+*   **SNR and Data Corruption Boundaries:** A critical Signal-to-Noise Ratio (SNR) threshold exists at ~5 dB. When SNR drops below 0 dB or corruption exceeds the $1\sigma$ level, the diagnostic class structure completely collapses (accuracy approaching random guessing at ~15%).
+*   **Role of the Digital Twin:** Once DT information is severely invalidated, the class structure collapses. This proves that the DT is not merely "supplementary information," but a critical reference for establishing decision boundaries. Our boundary tests conclusively demonstrate that the framework **does not require absolute high-fidelity non-linear modeling**, but relies strictly on **dynamic consistency and the absence of systematic offsets**.
