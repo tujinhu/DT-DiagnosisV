@@ -10,6 +10,7 @@
 - [Repository Structure](#repository-structure)
 - [Dataset Description](#dataset-description)
 - [Fault-Injection Protocol](#fault-injection-protocol)
+- [Physics-Informed Baseline Comparison](#physics-informed-baseline-comparison)
 - [Model Architecture](#model-architecture)
 - [Training Configuration](#training-configuration)
 - [Hardware & Software Platform](#hardware--software-platform)
@@ -168,6 +169,51 @@ Additional reproducibility notes:
 | **m6** | `data_for_v2v_m6/` | V2V | Cross-domain generalization (aggressive maneuvers) |
 | **m6** | `data_ver/` | R2V | Cross-domain generalization (aggressive maneuvers) |
 
+---
+
+## Physics-Informed Baseline Comparison
+
+To clarify how TC-SGDN differs from conventional physics-informed machine learning baselines, we provide a controlled PI-ResGNN comparison. PI-ResGNN uses the same 18-channel physical/DT residual input, the same GAT backbone, and the same BiGRU temporal encoder as TC-SGDN. The only controlled difference is that PI-ResGNN replaces the DT-consistency graph with generic graph topologies.
+
+### Controlled Baseline Design
+
+| Method | Physics-informed residual input | GNN + temporal encoder | Graph topology / semantics |
+|---|:---:|:---:|---|
+| TC-SGDN | Yes | GAT + BiGRU | DT-consistency graph with temporal-continuity, sensor-coupling, and physical-virtual correction edges |
+| PI-ResGNN (Correlation) | Yes | GAT + BiGRU | Global Top-K cosine adjacency, K=5 |
+| PI-ResGNN (Fully connected) | Yes | GAT + BiGRU | Intra-timestep fully connected sensor graph |
+| PI-ResGNN (KNN) | Yes | GAT + BiGRU | Euclidean KNN adjacency, K=5 |
+
+This comparison separates feature-level physics-informed learning from graph-native DT-consistency learning. PI-ResGNN receives the same residual features as TC-SGDN, but it does not encode the synchronized DT as an online healthy-reference relation inside graph message passing.
+
+### Main Results
+
+Accuracy is reported below.
+
+| Dataset | TC-SGDN | PI-ResGNN (Correlation) | PI-ResGNN (Fully connected) | PI-ResGNN (KNN) |
+|---|---:|---:|---:|---:|
+| DS1 v2v-c4 | 0.9819 | 0.9801 | 0.9543 | 0.9796 |
+| DS2 r2v-c4 | 0.9965 | 0.8715 | 0.8332 | 0.9936 |
+| DS4 r2v-m6 | 0.9822 | 0.8865 | 0.7589 | 0.7839 |
+
+In the matched DS1 setting, physics-informed residual features already provide strong observability, so PI-ResGNN variants can approach TC-SGDN. Under DS2 distribution shift and DS4 unseen high-maneuver conditions, generic correlation, fully connected, and KNN graph structures degrade more clearly. This indicates that residual features alone are not sufficient for robust UAV fault diagnosis; the key contribution of TC-SGDN is to embed physical-virtual consistency into graph topology and message propagation.
+
+### Reproduction Configuration
+
+| Item | Setting |
+|---|---|
+| Input channels | 18 channels: Acc, ErrAcc, Gyro, ErrGyro, Mag, ErrMag |
+| Sequence length | 80 |
+| Sliding step | 4 |
+| Graph nodes | 6 sensor/residual nodes per timestep, 480 nodes per sample |
+| Node feature dimension | 3 axes per node |
+| Backbone | GAT, hidden dimension 64, 4 attention heads |
+| Temporal encoder | Bidirectional GRU, hidden dimension 128 |
+| Classifier | Mean pooling + fully connected layer |
+| Optimizer | Adam, learning rate 0.001, weight decay 1e-4 |
+| Batch size | 32 |
+| Training epochs | 15 |
+| K for Correlation/KNN graphs | 5 |
 ---
 
 ## Model Architecture
