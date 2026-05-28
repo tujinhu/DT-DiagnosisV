@@ -9,6 +9,7 @@
 - [Architecture Overview](#architecture-overview)
 - [Repository Structure](#repository-structure)
 - [Dataset Description](#dataset-description)
+- [Fault-Injection Protocol](#fault-injection-protocol)
 - [Model Architecture](#model-architecture)
 - [Training Configuration](#training-configuration)
 - [Hardware & Software Platform](#hardware--software-platform)
@@ -127,9 +128,36 @@ Each dataset directory follows the same 3-stage pipeline:
 | Class | Label | Fault Type | Physical Mechanism | Injection |
 |:-----:|:-----:|-----------|-------------------|-----------|
 | C1 | 1 | Normal | No fault | — |
-| C2 | 2 | Accelerometer anomaly | Additive sensor bias on Acc-X | flag3=3000 |
-| C3 | 3 | Motor disturbance | Motor vibration (multi-channel) | flag3=200, motor03 |
-| C4 | 4 | Efficiency degradation | Multiplicative thrust reduction | flag4=0.85, motor03 |
+| C2 | 2 | Accelerometer noise interference (ANI) | Acc-x channel interference | PX4 fault ID 12, flag 3, firmware trigger parameter `A_acc=3000` |
+| C3 | 3 | One motor signal jump (OMSJ) | Motor #3 actuator/control signal jump | PX4 fault ID 11, flag 3, `Delta u=200` |
+| C4 | 4 | One motor power drop (OMPD) | Motor #3 multiplicative efficiency degradation | PX4 fault ID 11, flag 4, `eta_eff=0.85` |
+
+### Fault-Injection Protocol
+
+The benchmark uses a bounded PX4-triggered fault-emulation protocol. Each fault run follows the same safety-oriented operating sequence:
+
+1. Arm and take off.
+2. Record the takeoff segment (`mode2_3`).
+3. Enter hover stabilization (`mode2_6`).
+4. Trigger the target fault (`mode2_9`).
+5. Stop the fault-recording phase with a stop tag.
+6. Enter landing/recovery (`mode2_7`).
+7. Restore the fault parameter to its nominal value before the next run.
+
+The flight-log segmentation is controlled by PX4 command markers written into `vehicle_command_0.csv`. The preprocessing utility `RflyDtrain.py` identifies start/stop markers (`param7=666/777`) and extracts the corresponding segments. The downstream `Dpro.py` pipeline aligns the real UAV data from `Draw/` with the synchronized DT data from `Dsim/`, interpolates unequal-length sequences, and writes synchronized raw, simulated, and residual files to `Dpro/`.
+
+| Class | Fault mechanism | Severity setting | Primary affected channel | Trigger duration | Operating window | Reset / recovery procedure |
+|:---:|---|---|---|---:|---|---|
+| C2 / ANI | Accelerometer noise interference, PX4 fault ID 12, flag 3 | Firmware-level Acc-x interference parameter `A_acc=3000`. This value is retained as the PX4 trigger parameter unless a firmware-to-physical unit conversion is specified. | Directly applied to `accelerometer_m_s2[0]` (Acc-x); all IMU/magnetometer channels are retained as observed responses after dynamic coupling. | ~10.00 s over 10 runs | Triggered after takeoff and a ~3 s hover-stabilization segment. | The fault window is terminated by `2,10,2,9`; the vehicle then enters landing/recovery. Before the next run, the fault parameter is restored to `A_acc=0`. |
+| C3 / OMSJ | One-motor signal jump, PX4 fault ID 11, flag 3 | Motor #3 signal-jump/control perturbation parameter `Delta u=200`. | Directly applied to the Motor #3 actuator/control channel; the response propagates to gyro/acceleration residuals through actuator-body coupling. | ~10.00 s over 10 runs | Triggered after takeoff and a ~3 s hover-stabilization segment. | The fault window is terminated by `2,10,2,9`; the vehicle then enters landing/recovery. Before the next run, the motor perturbation is disabled by setting `Delta u=0`. |
+| C4 / OMPD | One-motor power drop, PX4 fault ID 11, flag 4 | Motor #3 efficiency scaling `eta_eff=0.85`, corresponding to a 15% efficiency/power reduction. | Directly applied to the Motor #3 efficiency/actuation output; the induced response is observed through synchronized IMU residuals. | ~5.00 s over 10 runs | Triggered after takeoff and a ~3 s hover-stabilization segment. | The fault window is terminated by `2,10,2,9`; the vehicle then enters landing/recovery. Before the next run, actuator efficiency is restored to `eta_eff=1`. |
+
+Additional reproducibility notes:
+
+- Fault-mode directories encode the target channel and trigger parameter, e.g., `3-acc-x-axis-flag3-3000`, `6-motor03-flag3-200`, and `5-motor03-flag4-085`.
+- The model input keeps nine synchronized sensor channels: `gyro_rad[0,1,2]`, `accelerometer_m_s2[0,1,2]`, and `magnetometer_ga[0,1,2]`.
+- Residual files are computed from synchronized physical and virtual data. In the paper, this residual is used as the physical-virtual consistency cue for TC-SGDN.
+- C4 is intentionally retained as a challenging case. Unlike C2/C3, its multiplicative efficiency degradation can look like a scaled nominal response, which explains its larger overlap with normal conditions and the weaker separability of additive residuals.
 
 ### Dataset Variants
 
